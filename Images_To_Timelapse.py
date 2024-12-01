@@ -77,7 +77,7 @@ class App (ctk.CTk):
 
         # Botón para generar el video
         self.button_generate = ctk.CTkButton(
-            self.frame_root, text="Generar", font=self.fontV)
+            self.frame_root, text="Generar", command=self.generate_video, font=self.fontV)
         self.button_generate.grid(
             row=3, column=0, padx=20, pady=(20, 10), sticky=ctk.E)
 
