@@ -24,7 +24,7 @@ class App (ctk.CTk):
                                pady=(10, 3), sticky=ctk.W)
 
         self.button_browse_folder = ctk.CTkButton(
-            self.frame_folder, text="Examinar", font=self.fontV)
+            self.frame_folder, text="Buscar", command=self.browse_folder, font=self.fontV)
         self.button_browse_folder.grid(
             row=0, column=1, padx=10, pady=(10, 3), sticky=ctk.E)
 
@@ -73,6 +73,13 @@ class App (ctk.CTk):
             self.frame_root, text="Generar", font=self.fontV)
         self.button_generate.grid(
             row=3, column=0, padx=20, pady=(20, 10), sticky=ctk.E)
+
+    def browse_folder(self):
+        folder_selected = ctk.filedialog.askdirectory(
+            title="Seleccionar carpeta")
+        if folder_selected:
+            self.entry_folder.delete(0, ctk.END)
+            self.entry_folder.insert(0, folder_selected)
 
 
 if __name__ == '__main__':
