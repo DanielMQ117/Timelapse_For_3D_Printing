@@ -58,7 +58,7 @@ class App (ctk.CTk):
                                pady=(10, 3), sticky=ctk.W)
 
         self.button_save_file = ctk.CTkButton(
-            self.frame_output, text="Guardar como", font=self.fontV)
+            self.frame_output, text="Guardar como", command=self.save_file, font=self.fontV)
         self.button_save_file.grid(
             row=0, column=1, padx=10, pady=(10, 3), sticky=ctk.E)
 
@@ -80,6 +80,16 @@ class App (ctk.CTk):
         if folder_selected:
             self.entry_folder.delete(0, ctk.END)
             self.entry_folder.insert(0, folder_selected)
+
+    def save_file(self):
+        file_path = ctk.filedialog.asksaveasfilename(
+            title="Guardar video como",
+            defaultextension=".mp4",
+            filetypes=[("Archivos MP4", "*.mp4")]
+        )
+        if file_path:
+            self.entry_output.delete(0, ctk.END)
+            self.entry_output.insert(0, file_path)
 
 
 if __name__ == '__main__':
