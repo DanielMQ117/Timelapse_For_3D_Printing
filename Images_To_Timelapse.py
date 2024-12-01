@@ -12,11 +12,11 @@ class App (ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("TimeLapse")
-        self.geometry("400x400")
+        self.title("SimpleLapse")
+        self.geometry("400x350")
         self.resizable(False, False)
         self.fontV = ctk.CTkFont(
-            family='Verdana', size=12, weight='normal', slant='roman')
+            family='Verdana', size=12, weight='bold', slant='roman')
 
         self.frame_root = ctk.CTkFrame(self)
         self.frame_root.pack(padx=10, pady=10)
