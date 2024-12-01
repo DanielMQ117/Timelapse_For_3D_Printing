@@ -23,6 +23,19 @@ def rename_images_sequentially(folder: str) -> list:
     return renamed_images
 
 
+def resize_image(image, target_size):
+    """Redimensiona la imagen manteniendo la proporción."""
+    height, width = image.shape[:2]
+    target_width, target_height = target_size
+    scale = min(target_width / width, target_height / height)
+    new_width = int(width * scale)
+    new_height = int(height * scale)
+    resized_image = cv2.resize(
+        image, (new_width, new_height), interpolation=cv2.INTER_LINEAR)
+
+    return resized_image
+
+
 def create_timelapse(image_folder: str, output_video: str, total_duration: int, fps: int = 30) -> bool:
     images = rename_images_sequentially(image_folder)
 
@@ -52,7 +65,7 @@ def create_timelapse(image_folder: str, output_video: str, total_duration: int, 
 
         # Verificar que las dimensiones coincidan
         if (frame.shape[1], frame.shape[0]) != target_size:
-            frame = cv2.resize(frame, target_size)
+            frame = resize_image(frame, target_size)
 
         # Escribir cada imagen tantas veces como sea necesario
         for _ in range(frames_per_image):
