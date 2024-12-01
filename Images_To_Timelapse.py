@@ -5,9 +5,13 @@ from lib import create_timelapse
 
 
 class App (ctk.CTk):
-    def __init__(self):
+    # Configuración de la ventana principal
+    ctk.set_appearance_mode("System")
+    ctk.set_default_color_theme("blue")
 
+    def __init__(self):
         super().__init__()
+
         self.title("TimeLapse")
         self.geometry("400x400")
         self.resizable(False, False)
