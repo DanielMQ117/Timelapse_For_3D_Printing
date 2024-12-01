@@ -1,4 +1,6 @@
+import os
 import customtkinter as ctk
+from tkinter import messagebox
 
 
 class App (ctk.CTk):
@@ -90,6 +92,33 @@ class App (ctk.CTk):
         if file_path:
             self.entry_output.delete(0, ctk.END)
             self.entry_output.insert(0, file_path)
+
+    def generate_video(self):
+        image_folder = self.entry_folder.get().strip()
+        output_video = self.entry_output.get().strip()
+        total_duration = self.entry_duration.get().strip()
+
+        if not output_video.endswith((".mp4", ".MP4")):
+            output_video = output_video + ".mp4"
+
+        if not image_folder or not output_video or not total_duration:
+            messagebox.showerror(
+                "Error", "Por favor, completa todos los campos.")
+            return
+
+        if not os.path.isdir(image_folder):
+            messagebox.showerror(
+                "Error", "La carpeta seleccionada no es válida.")
+            return
+
+        try:
+            total_duration = int(total_duration)
+            if total_duration <= 2:
+                raise ValueError
+        except ValueError:
+            messagebox.showerror(
+                "Error", "La duración debe ser mayor a 2s.")
+            return
 
 
 if __name__ == '__main__':
