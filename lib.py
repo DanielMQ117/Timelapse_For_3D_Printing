@@ -2,10 +2,29 @@ import os
 import cv2
 
 
-def create_timelapse(image_folder: str, output_video: str, total_duration: int, fps: int = 30) -> bool:
+def rename_images_sequentially(folder: str) -> list:
+    """Renombra las imágenes en la carpeta para que tengan un nombre secuencial."""
     valid_extensions = (".png", ".jpg", ".jpeg")
     images = [img for img in os.listdir(
-        image_folder) if img.lower().endswith(valid_extensions)]
+        folder) if img.lower().endswith(valid_extensions)]
+
+    if not images:
+        return []
+
+    renamed_images = []
+    for i, image in enumerate(sorted(images), start=1):
+        ext = os.path.splitext(image)[1]
+        new_name = f"dmq_{i:04d}{ext}"  # Formato: dmq_0001.jpg
+        old_path = os.path.join(folder, image)
+        new_path = os.path.join(folder, new_name)
+        os.rename(old_path, new_path)
+        renamed_images.append(new_name)
+
+    return renamed_images
+
+
+def create_timelapse(image_folder: str, output_video: str, total_duration: int, fps: int = 30) -> bool:
+    images = rename_images_sequentially(image_folder)
 
     if not images:
         return -1
