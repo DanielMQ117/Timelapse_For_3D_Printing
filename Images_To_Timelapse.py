@@ -1,6 +1,7 @@
 import os
 import customtkinter as ctk
 from tkinter import messagebox
+from lib import create_timelapse
 
 
 class App (ctk.CTk):
@@ -96,7 +97,7 @@ class App (ctk.CTk):
     def generate_video(self):
         image_folder = self.entry_folder.get().strip()
         output_video = self.entry_output.get().strip()
-        total_duration = self.entry_duration.get().strip()
+        total_duration = int(self.entry_duration.get().strip())
 
         if not output_video.endswith((".mp4", ".MP4")):
             output_video = output_video + ".mp4"
@@ -112,13 +113,14 @@ class App (ctk.CTk):
             return
 
         try:
-            total_duration = int(total_duration)
             if total_duration <= 2:
                 raise ValueError
         except ValueError:
             messagebox.showerror(
                 "Error", "La duración debe ser mayor a 2s.")
             return
+
+        result = create_timelapse(image_folder, output_video, total_duration)
 
 
 if __name__ == '__main__':
