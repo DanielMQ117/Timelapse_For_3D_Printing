@@ -122,6 +122,13 @@ class App (ctk.CTk):
 
         result = create_timelapse(image_folder, output_video, total_duration)
 
+        if result == -1:
+            messagebox.showerror(
+                "Error", "No se encontraron imágenes en el directorio especificado.")
+        else:
+            messagebox.showinfo(
+                "Éxito", f"Timelapse creado con éxito: {output_video}")
+
 
 if __name__ == '__main__':
     app = App()
